@@ -28,3 +28,32 @@ Perbedaan utama ada pada inialisasi nilai (pemberian nilai) dari variabelnya, co
   - Menerapkan styling pada hal-hal yang diperlukan seperti tulisan genap dan ganjil
   - Menerapkan ternary operator untuk melakukan filter informasi yang masuk ke dalam flutter application
   - Memanfaatkan widget visibility untuk bonus
+
+# Tugas 8: Elemen Dasar Flutter
+
+### Perbedaan Navigator.push dan Navigator.pushReplacement
+`Navigator.push` adalah cara kita untuk menambahkan page yang akan dituju di top of stack navigator. Di lain sisi, `Navigator.pushReplacement` akan menghapus top of stack saat ini (page tempat kita berada), lalu menambahkan page yang dituju di top of stack navigator
+
+## Widget yang dipakai dan fungsinya
+
+-   Container: widget yang berfungsi sebagai _container_ untuk menampung widget lainnya
+-   Form: widget yang berfungsi untuk membuat form
+-   Column: widget yang berfungsi untuk menampung widget lainnya secara vertikal
+-   ListTile: row yang menampung teks sebagai leading dan trailing
+-   Drawer: widget yang berfungsi untuk membuat _drawer_ di sisi kiri layar (untuk navigasi)
+
+## Jenis event pada Flutter
+
+-   onTap: event yang terjadi ketika widget di tap
+-   onPressed: event yang terjadi ketika widget di tekan
+-   onChanged: event yang terjadi ketika widget diubah
+-   onSaved: event yang terjadi ketika widget disimpan
+
+### Jelaskan bagaimana cara kerja Navigator dalam "mengganti" halaman dari aplikasi Flutter.
+Navigator sebenarnya berjalan dengan menggunakan prinsip stack untuk menyimpan page-page aplikasi yang dikunjungi. Page yang sedang dikunjungi biasanya berada pada top of stack. Apabila kita ingin mennganti halaman/page, maka page yang akan dikunjungi akan di-push pada top of stack. Di lain sisi, jika kita ingin berpindah ke halaman/page sebelumnya maka akan dilakukan operasi pop pada top of stack sehingga page yang saat ini dikunjungi akan dihapus dari top of stack. Karena penghapusan tersebut, top of stack akan berada pada page yang memuat halaman sebelumnya.
+
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+- Membuat widget drawer yang menavigasikan setiap fitur aplikasi agar saling terhubung.
+- Membuat kode dart `form.dart` yang berfungsi untuk menampilkan form yang nantinya akan meminta input budget dari user. Jangan lupa untuk menyimpan data `Budget` ke dalam list of `Budget`.
+- Membuat kode dart `data.dart` yang berfungsi untuk menampilkan data budget yang telah ditambahkan pada `form.dart`.  
