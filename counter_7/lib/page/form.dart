@@ -1,7 +1,8 @@
 import 'package:counter_7/main.dart';
 import 'package:flutter/material.dart';
-import 'package:counter_7/data.dart';
+import 'package:counter_7/page/data.dart';
 import 'package:flutter/services.dart';
+import 'package:counter_7/widgets/drawer.dart';
 
 class Budget {
   String judul;
@@ -11,7 +12,7 @@ class Budget {
   Budget(this.judul, this.nominal, this.tipe);
 }
 
-class Naro{
+class Naro {
   static List<Budget> contain = <Budget>[];
 }
 
@@ -36,43 +37,7 @@ class _MyFormPageState extends State<MyFormPage> {
         title: Text("Form"),
       ),
       // Menambahkan drawer menu
-      drawer: Drawer(
-        child: Column(
-          children: [
-            // Menambahkan clickable menu
-           ListTile(
-            title: const Text('counter_7'),
-            onTap: () {
-              // Route menu ke halaman utama
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const MyHomePage(title:"counter_7")),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Tambah Budget'),
-            onTap: () {
-              // Route menu ke halaman form
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const MyFormPage()),
-              );
-            },
-          ),
-           ListTile(
-            title: const Text('Data Budget'),
-            onTap: () {
-              // Route menu ke halaman form
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const MyDataPage()),
-              );
-            },
-          ),
-          ],
-        ),
-      ),
+      drawer: const DrawerWidget(),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -112,38 +77,39 @@ class _MyFormPageState extends State<MyFormPage> {
                 ),
               ),
               Padding(
-                // Menggunakan padding sebesar 8 pixels
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Nominal",
-                    // Menambahkan circular border agar lebih rapi
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
+                  // Menggunakan padding sebesar 8 pixels
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Nominal",
+                      // Menambahkan circular border agar lebih rapi
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                     ),
-                  ),
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-             onChanged: (String? value) {
-                    setState(() {
-                      _nominal = int.parse(value!);
-                    });
-                  },
-                  // Menambahkan behavior saat data disimpan
-                  onSaved: (String? value) {
-                    setState(() {
-                      _nominal = int.parse(value!);
-                    });
-                  },
-                  // Validator sebagai validasi form
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Nominal tidak boleh kosong!';
-                    }
-                    return null;
-                  },
-) 
-              ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    onChanged: (String? value) {
+                      setState(() {
+                        _nominal = int.parse(value!);
+                      });
+                    },
+                    // Menambahkan behavior saat data disimpan
+                    onSaved: (String? value) {
+                      setState(() {
+                        _nominal = int.parse(value!);
+                      });
+                    },
+                    // Validator sebagai validasi form
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nominal tidak boleh kosong!';
+                      }
+                      return null;
+                    },
+                  )),
               ListTile(
                 leading: const Icon(Icons.class_),
                 title: const Text(
