@@ -65,7 +65,9 @@ class MyWatchlistDetailPage extends StatelessWidget {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(
-                          movie.fields?.watched == "yes" ? "Watched" : "Not Watched",
+                          movie.fields?.watched == Watched.YES
+                              ? "Watched"
+                              : "Not Watched",
                           style: const TextStyle(fontSize: 16),
                         ),
                         dense: true,

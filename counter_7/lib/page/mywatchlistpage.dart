@@ -1,8 +1,8 @@
+import 'package:counter_7/model/mywatchlist.dart';
 import 'package:counter_7/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_7/function/fetch_mywatchlist.dart';
 import 'package:counter_7/page/mywatchlist_detail.dart';
-
 
 class MyWatchListPage extends StatefulWidget {
   const MyWatchListPage({super.key});
@@ -44,7 +44,8 @@ class _MyWatchListPageState extends State<MyWatchListPage> {
                             child: Material(
                                 elevation: 2.0,
                                 borderRadius: BorderRadius.circular(5.0),
-                                color: snapshot.data![index].fields.watched
+                                color: (snapshot.data![index].fields.watched ==
+                                        Watched.YES)
                                     ? Colors.greenAccent
                                     : Colors.deepOrangeAccent,
                                 shadowColor: Colors.blueGrey,
@@ -66,11 +67,17 @@ class _MyWatchListPageState extends State<MyWatchListPage> {
                                     activeColor: Colors.limeAccent,
                                     checkColor: Colors.black,
                                     focusColor: Colors.lightGreenAccent,
-                                    value: snapshot.data![index].fields.watched,
+                                    value:
+                                        (snapshot.data![index].fields.watched ==
+                                            Watched.YES),
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        snapshot.data![index].fields.watched =
-                                            value!;
+                                        (snapshot.data![index].fields.watched ==
+                                                Watched.YES)
+                                            ? snapshot.data![index].fields
+                                                .watched = Watched.NO
+                                            : snapshot.data![index].fields
+                                                .watched = Watched.YES;
                                       });
                                     },
                                   ),
