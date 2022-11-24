@@ -112,7 +112,7 @@ Data diambil menggunakan HTTP dalam fungsi 'fetchWatchlist' yang memanggil fungs
 			movie: snapshot.data![index],
 		  ),
 		));
-	```
+  ```
 6. Buat widget 'CheckBox' dan fungsi 'onChanged' untuk Bonus.
   ```dart
 	Checkbox(
@@ -133,4 +133,4 @@ Data diambil menggunakan HTTP dalam fungsi 'fetchWatchlist' yang memanggil fungs
       });
     },
   ),
-	```
+  ```
