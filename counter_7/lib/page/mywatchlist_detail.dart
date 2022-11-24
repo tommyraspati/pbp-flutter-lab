@@ -1,7 +1,7 @@
 import 'package:counter_7/model/mywatchlist.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_7/widgets/drawer.dart';
-import 'package:intl/intl.dart';
+
 
 class MyWatchlistDetailPage extends StatelessWidget {
   final MyWatchList movie;
@@ -11,7 +11,6 @@ class MyWatchlistDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('MMM dd, yyyy');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail'),

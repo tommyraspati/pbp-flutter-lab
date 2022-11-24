@@ -59,3 +59,78 @@ Navigator sebenarnya berjalan dengan menggunakan prinsip stack untuk menyimpan p
 - Membuat kode dart `data.dart` yang berfungsi untuk menampilkan data budget yang telah ditambahkan pada `form.dart`.  
 
 # Tugas 9  Integrasi Web Service pada Flutter
+
+### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Ya, kita dapat mengambil data JSON tanpa membuat model terlebih dahulu. Kita dapat membuat dynamic map dari JSON dan mengakses nilainya seperti dictionary dengan python ('data[key]'). Tetapi tidak disarankan karena kita tidak akan tahu apakah ada fields yang hilang atau fields tidak seperti yang kita harapkan, jadi akan sulit untuk mengelolanya dan rawan menimbulkan kesalahan. Meskipun demikian, jelas bahwa itu tidak lebih baik daripada membuat model terlebih dahulu.
+
+### Widget yang diimplementasikan
+  -  ListTile: row yang menampung teks sebagai leading dan trailing
+  -  Checkbox: widget yang berfungsi untuk membuat checkbox
+  -  TextButton: widget yang berfungsi untuk membuat button
+  -  FutureBuilder: widget yang berfungsi untuk menampilkan data yang diambil dari API
+
+### Mekanisme pengambilan data dari json hingga dapat ditampilkan pada Flutter
+Data diambil menggunakan HTTP dalam fungsi 'fetchWatchlist' yang memanggil fungsi get dengan instance HTTP. Fungsi mengembalikan daftar objek 'MyWatchlist'. 'FutureBuilder' akan memanggil fungsi dan menunggu responsnya. Ketika data diambil, 'FutureBuilder' mengembalikan 'ListView.builder' yang membangun 'ListTiles' yang berisi data yang dipetakan yang kita dapatkan dari fungsi 'fetchWatchlist'.
+
+### Implementation
+1. Buat 'mywatchlist.dart' dan buat kelas 'MyWatchList'.
+2. Buat 'fetch_mywatchlist.dart' dan buat fungsi seperti ini untuk mengambil data dari API.
+  ```dart
+    Future<List<MyWatchList>> fetchWatchlist() async {
+    var url = Uri.parse('https://django-tugaspbp2raspati.herokuapp.com/mywatchlist/json/');
+    var response = await http.get(
+      url,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+    );
+
+    // melakukan decode response menjadi bentuk json
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+    // melakukan konversi data json menjadi object MyWatchlist
+    List<MyWatchList> listMyWatchlist = [];
+    for (var d in data) {
+      if (d != null) {
+        listMyWatchlist.add(MyWatchList.fromJson(d));
+      }
+    }
+
+    return listMyWatchlist;
+  }
+  ```
+3. Buat 'mywatchlistpage.dart' dan buat 'MyWatchListPage StatefulWidget' yang berisi 'FutureBuilder' yang mengambil data menggunakan fungsi 'fetchWatchlist'.
+4. Buat 'mywatchlist_detail.dart' dan buat 'MyWatchListDetailPage StatelessWidget' yang menampilkan data yang akan diteruskan dari 'MyWatchListPage'.
+5. Teruskan data dari 'MyWatchListPage' ke 'MyWatchListDetailPage' menggunakan 'Navigator.push'.
+  ```dart
+	Navigator.push(
+		context,
+		MaterialPageRoute(
+		  builder: (context) =>
+			  MyWatchListDetailPage(
+			movie: snapshot.data![index],
+		  ),
+		));
+	```
+6. Buat widget 'CheckBox' dan fungsi 'onChanged' untuk Bonus.
+  ```dart
+	Checkbox(
+    activeColor: Colors.limeAccent,
+    checkColor: Colors.black,
+    focusColor: Colors.lightGreenAccent,
+    value:
+        (snapshot.data![index].fields.watched ==
+            Watched.YES),
+    onChanged: (bool? value) {
+      setState(() {
+        (snapshot.data![index].fields.watched ==
+                Watched.YES)
+            ? snapshot.data![index].fields
+                .watched = Watched.NO
+            : snapshot.data![index].fields
+                .watched = Watched.YES;
+      });
+    },
+  ),
+	```
